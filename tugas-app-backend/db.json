@@ -1,0 +1,11 @@
+{
+  "list-tugas": [
+    {
+      "id": 2,
+      "mata_kuliah": "ui/ux",
+      "judul": "membuat mokup",
+      "deadline": "30 September 2021",
+      "status": "belum"
+    }
+  ]
+}

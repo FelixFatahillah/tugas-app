@@ -26,7 +26,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="transaction in transactions" :key="transaction.id">
+                  <tr v-for="transaction in transactions" :key="transaction.index">
                     <td>{{ transaction.mata_kuliah }}</td>
                     <td>{{ transaction.judul }}</td>
                     <td>{{ transaction.deadline }}</td>
@@ -34,7 +34,7 @@
                     <td>
                       <div class="btn-group">
                         <router-link :to="{ name: 'Edit', params:{id: transaction.id} }" class="btn btn-sm btn-outline-info">Edit</router-link>
-                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        <button class="btn btn-sm btn-outline-danger" @click.prevent="destroy(transaction.id, index)">Delete</button>
                       </div>
                     </td>
                   </tr>
@@ -66,6 +66,17 @@ export default {
     setTransactions(data) {
       this.transactions = data
     },
+
+    destroy(id) {
+      axios
+      .delete(`http://localhost:3000/list-tugas/${id}`)
+      .then(() => {
+        console.log("data telah dihapus");
+      })
+        // kenapa response.data karena object berada di respon bagian data (jika di inspect)
+      .catch((error) =>console.log("Gagal = ", error))
+        // respon kalo gagal
+    }
   },
   // mounted mengambil data dari API dengan endpoint (http://localhost:3000/best-products)
   mounted() {
@@ -76,6 +87,7 @@ export default {
       .catch((error) =>console.log("Gagal = ", error))
         // respon kalo gagal
   },
+  
 };
 </script>
 
