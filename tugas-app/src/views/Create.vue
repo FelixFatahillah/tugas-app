@@ -33,7 +33,7 @@
                 <div class="mb-3">
                   <label for="" class="form-label">Deadline</label>
                   <input type="text" class="form-control" placeholder="1 januari 2000" v-model="transaction.deadline">
-                  <div v-if="validation.mata_deadline" class="text-danger">
+                  <div v-if="validation.deadline" class="text-danger">
                     {{ validation.deadline[0] }}
                   </div>
                 </div>
@@ -59,6 +59,7 @@
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
+import Swal from "vue-sweetalert2"
 
 export default {
     name: 'Create',
@@ -85,9 +86,17 @@ export default {
         .then(() => {
           router.push({
             name: 'Index'
-          })
+          }),
+          Swal.fire({
+  position: 'top-end',
+  icon: 'success',
+  title: 'Your work has been saved',
+  showConfirmButton: false,
+  timer: 1500
+})
 
         }).catch((err) => {
+          console.log(err.response);
             validation.value = err.response.data
         });
       }
